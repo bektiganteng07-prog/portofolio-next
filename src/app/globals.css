@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+@theme {
+  --color-utama: #1D3557;
+  --color-aksen: #C1121F;
+  --color-later: #F1FAEE;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFFFFF;
+  --foreground: #1D3557;
 }
 
 @theme inline {
