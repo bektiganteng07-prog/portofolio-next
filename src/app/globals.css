@@ -3,12 +3,12 @@
 @theme {
   --color-utama: #1D3557;
   --color-aksen: #C1121F;
-  --color-later: #F1FAEE;
+  --color-latar: #F9FAFB;
 }
 
 :root {
-  --background: #F1FAEE;
-  --foreground: #98FF98;
+  --background: #F9FAFB;
+  --foreground: #1f2937;
 }
 
 @theme inline {

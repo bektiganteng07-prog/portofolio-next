@@ -1,7 +1,12 @@
 export default function Footer() {
+  const tahun = new Date().getFullYear();
+
   return (
-    <footer className="bg-utama py-4 text-center text-sm text-white">
-      © 2026 Bekti Ibrafirmansyah. Dibuat dengan Next.js di Kelas Industri UBIG.
+    <footer className="mt-auto bg-utama p-6 text-center text-latar">
+      <p>
+        &copy; {tahun} Bekti Ibrafirmansyah. Dibuat dengan Next.js di Kelas Industri
+        UBIG.
+      </p>
     </footer>
   );
 }
