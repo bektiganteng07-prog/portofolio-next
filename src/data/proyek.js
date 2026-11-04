@@ -25,7 +25,7 @@ export const proyek = [
   {
     slug: "porto-pribdi",
     judul: "portoflio pribadi",
-    kategori: "NEXT.JS",
+    kategori: "Next.js",
     minggu: "Minggu 03",
     gambar: "/proyek/porto.png",
     deskripsi:
