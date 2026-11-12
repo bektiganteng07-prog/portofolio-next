@@ -2,43 +2,50 @@ import Hero from "@/components/Hero";
 import Link from "next/link";
 import ProyekCard from "@/components/ProyekCard";
 import SkillCard from "@/components/SkillCard";
-import { proyek } from "@/data/proyek";
+import { buttonVariants } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
 
-const skills = [
-  { nama: "HTML", level: "Menengah" },
-  { nama: "CSS", level: "Menengah" },
-  { nama: "Git dan GitHub", level: "Dasar" },
-  { nama: "Desain poster dengan Canva", level: "Mahir" },
-  { nama: "JavaScript", level: "Dasar" },
-];
+export default async function Home() {
+  const { data: skills, error: errorSkills } = await supabase
+    .from("skills")
+    .select("*")
+    .order("id");
+  const { data: proyekTerbaru, error: errorProyek } = await supabase
+    .from("projects")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(3);
 
-const proyekTerbaru = proyek.slice(-3);
-
-export default function Home() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
       <Hero
         nama="bekti ibrafirmansyah"
         tagline="Siswa kelas XI SMK, calon Junior Web Developer di Kelas Industri UBIG."
       />
-      <section className="mt-6 rounded-xl bg-white dark:bg-gray-800 p-6 shadow">
-        <h2 className="mb-4 text-2xl font-bold text-utama dark:text-sky-200">Keahlian</h2>
+      <section className="mt-6 rounded-xl bg-card p-6 shadow">
+        <h2 className="mb-4 text-2xl font-bold text-primary">Keahlian</h2>
+        {errorSkills && (
+          <p className="text-aksen">Keahlian gagal dimuat: {errorSkills.message}</p>
+        )}
         <div className="grid gap-4 md:grid-cols-3">
-          {skills.map((skill) => (
+          {skills && skills.map((skill) => (
             <SkillCard key={skill.nama} nama={skill.nama} level={skill.level} />
           ))}
         </div>
       </section>
       <section className="mt-10">
-        <h2 className="mb-4 text-2xl font-bold text-utama dark:text-sky-200">Proyek Terbaru</h2>
+        <h2 className="mb-4 text-2xl font-bold text-primary">Proyek Terbaru</h2>
+        {errorProyek && (
+          <p className="text-aksen">Proyek gagal dimuat: {errorProyek.message}</p>
+        )}
         <div className="grid gap-6 md:grid-cols-3">
-          {proyekTerbaru.map((item) => (
+          {proyekTerbaru && proyekTerbaru.map((item) => (
             <ProyekCard key={item.slug} proyek={item} />
           ))}
         </div>
         <Link
           href="/proyek"
-          className="mt-6 inline-block rounded-lg bg-utama px-5 py-2 font-semibold text-white"
+          className={buttonVariants({ size: "lg", className: "mt-6" })}
         >
           Lihat semua proyek
         </Link>

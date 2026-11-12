@@ -3,9 +3,9 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <main className="mx-auto max-w-5xl px-4 py-20 text-center">
-      <p className="text-6xl font-bold text-aksen dark:text-red-300">404</p>
-      <h1 className="mt-4 text-2xl font-bold text-utama dark:text-sky-200">Halaman tidak ditemukan</h1>
-      <p className="mt-2 text-gray-700 dark:text-gray-300">
+      <p className="text-6xl font-bold text-aksen">404</p>
+      <h1 className="mt-4 text-2xl font-bold text-primary">Halaman tidak ditemukan</h1>
+      <p className="mt-2 text-muted-foreground">
         Alamat yang kamu buka tidak ada atau sudah dipindahkan.
       </p>
       <Link
