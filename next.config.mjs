@@ -3,6 +3,7 @@ const nextConfig = {
   /* config options here */
   experimental: {
     agentFeedback: true,
+    agentUpgrade: "security",
   },
   turbopack: {
     rules: {
