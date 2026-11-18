@@ -1,12 +1,12 @@
 # Struktur Database Portofolio
 
-Dokumen ini mencatat skema Supabase yang dituju untuk portofolio Bekti
-Ibrafirmansyah. Project Supabase yang direncanakan bernama `portofolio-bekti`
-dan menggunakan region Southeast Asia (Singapore). Status project, isi tabel,
-dan policy perlu diverifikasi langsung di dasbor Supabase.
+Dokumen ini mencatat skema Supabase portofolio Bekti Ibrafirmansyah. URL
+project dan publishable key disimpan di `.env.local`, yang diabaikan Git oleh
+aturan `.env*` di `.gitignore`. Jangan menyimpan secret key di repository.
 
-URL project dan publishable key disimpan di `.env.local`, yang diabaikan Git
-oleh aturan `.env*` di `.gitignore`. Jangan menyimpan secret key di repository.
+Secret key Supabase dan PIN halaman Kelola hanya disimpan sebagai environment
+variable server (`SUPABASE_SECRET_KEY` dan `ADMIN_PIN`), tanpa awalan
+`NEXT_PUBLIC_`.
 
 ## Tabel `projects`
 
@@ -39,8 +39,8 @@ Pesan dari form kontak.
 | `email` | `text` | Email pengirim |
 | `pesan` | `text` | Isi pesan |
 
-RLS harus aktif tanpa policy baca. Policy `insert` untuk form kontak berada di
-luar cakupan Minggu 13.
+RLS harus aktif tanpa policy baca publik. Form kontak tidak menyimpan pesan;
+pengunjung diarahkan ke Buku Tamu.
 
 ## Tabel `skills`
 
@@ -56,13 +56,21 @@ Daftar keahlian.
 RLS harus aktif. Policy `Pengunjung boleh membaca keahlian` memberikan peran
 `anon` akses `select` ke semua baris.
 
-## Catatan seed data
+## Tabel `buku_tamu`
 
-Data pada repository saat ini belum sama dengan enam baris proyek yang
-ditentukan dalam materi Minggu 13. `src/data/proyek.js` berisi tiga proyek
-dengan slug `web-gita`, `mockup-koperline`, dan `porto-pribdi`; karena itu,
-jumlah dan isi tabel `projects` tidak dinyatakan selesai di dokumen ini.
+Pesan publik dari halaman Buku Tamu.
 
-Materi Minggu 13 menyebut lima keahlian: HTML (Menengah), CSS (Menengah),
-Git dan GitHub (Dasar), Desain poster dengan Canva (Mahir), dan JavaScript
-(Dasar).
+| Kolom | Tipe | Keterangan |
+| --- | --- | --- |
+| `id` | `int8` | Primary key, nomor otomatis |
+| `created_at` | `timestamptz` | Waktu pesan dibuat, otomatis terisi |
+| `nama` | `text` | Nama pengirim, wajib diisi |
+| `pesan` | `text` | Isi pesan, wajib diisi |
+| `disematkan` | `boolean` | Penanda pesan yang disematkan, bawaan `false` |
+
+RLS aktif. Policy `Pengunjung boleh membaca buku tamu` dan
+`Pengunjung boleh menulis buku tamu` memberi peran `anon` akses `select` dan
+`insert`. Perubahan dan penghapusan dilakukan memakai klien admin di server.
+
+SQL pembuatan tabel dan policy Minggu 15 tercatat di
+[`supabase-minggu-15.sql`](./supabase-minggu-15.sql).
